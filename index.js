@@ -1,6 +1,8 @@
 'use strict';
 
 /**  Created by sean on 31/03/2016. */
+
+// Dependencies
 const Promise = require('bluebird');
 const sqlite3 = require('sqlite3').verbose();
 
@@ -24,7 +26,7 @@ class lite3 {
 	/**
 	 * Sets lite3.tableName property to perform operations.
 	 * @param {string} tbl - Name of table to perform operations.
-	 * @returns {lite3} - The Class with tableName property now set.
+	 * @returns {lite3} - The Class with lite3.tableName property now set.
 	 */
 	table(tbl) {
 		this.tableName = tbl;
