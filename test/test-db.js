@@ -14,7 +14,7 @@ db.serialize(function () {
 	db.run("CREATE TABLE if not exists people (" +
 		"id INTEGER PRIMARY KEY ASC , " +
 		"name varchar(255), " +
-		"age varchar(255))"
+		"age INTEGER)"
 	);
 
 	var stmt = db.prepare("INSERT INTO people VALUES (?,?,?)");

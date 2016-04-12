@@ -36,12 +36,24 @@ class lite3 {
 	/**
 	 * Prepares update statement with query to run with lite3.values() while setting lite3.queryStmt and lite3.queryType properties
 	 * @param {string} query - Sets lite3.stmt with UPDATE query syntax.
-	 * @returns {lite3} - Class with lite3.stmt property now set.
+	 * @returns {lite3} - Class with lite3.stmt property set.
 	 */
 	update(query) {
-		this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET ${query}`);
+		this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET (${query})`);
 		this.queryStmt = query;
 		this.queryType = 'UPDATE';
+		return this;
+	}
+
+	/**
+	 * @param {string} query - Question marks equal to the amount of values inserting
+	 * @returns {lite3} - Class with lite3.stmt, lite3.queryStmt, lite3.queryType property set
+	 */
+
+	insert(query) {
+		this.stmt = this.db.prepare(`INSERT INTO ${this.tableName} VALUES (${query})`);
+		this.queryStmt = query;
+		this.queryType = 'INSERT';
 		return this;
 	}
 
@@ -79,9 +91,6 @@ class lite3 {
 	 * @param {boolean} [returnChange] - True to return promise of changed lastID and changes
 	 */
 	values(vals, returnChange) {
-		console.log(this.stmt);
-		console.log(vals);
-
 		if (returnChange !== true) {
 			this.stmt.run(vals);
 			this.stmt.finalize();
