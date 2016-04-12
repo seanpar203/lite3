@@ -78,10 +78,10 @@ lite3
   .then(rows => console.log(rows))
   .catch(err => console.log(err));
   
-  lite3
-    .update('date=?, title=?')
-    .where('id=?')
-    .values(['04-12-2016',' Awesome New Tittle', 1], true)
-    .then(changes =>  console.log(changes))
-    .catch(err => console.log(err));
+lite3
+  .update('date=?, title=?')
+  .where('id=?')
+  .values(['04-12-2016',' Awesome New Tittle', 1], true)
+  .then(changes =>  console.log(changes))
+  .catch(err => console.log(err));
 ```
