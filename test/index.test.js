@@ -26,6 +26,7 @@ describe('lite3-tests', function () {
 	describe('table().update()', function () {
 		it('should set lite3.stmt, lite3.queryStmt and lite3.queryType', function () {
 			lite3.table('people').update('?,?,?');
+			expect(lite3.stmt).to.not.equal(null);
 			expect(lite3.tableName).to.equal('people');
 			expect(lite3.queryStmt).to.equal('?,?,?');
 			expect(lite3.queryType).to.equal('UPDATE');
@@ -37,9 +38,18 @@ describe('lite3-tests', function () {
 		it('should set lite3.stmt, lite3.queryStmt and lite3.queryType', function () {
 			// Insert a row into people table
 			lite3.table('people').insert('?,?,?');
+			expect(lite3.stmt).to.not.equal(null);
 			expect(lite3.tableName).to.equal('people');
 			expect(lite3.queryStmt).to.equal('?,?,?');
 			expect(lite3.queryType).to.equal('INSERT');
+		})
+	});
+
+	describe('lite3.table().del()', function () {
+		it('should set lite3.stmt and lite3.queryType', function () {
+			lite3.table('people').del();
+			expect(lite3.stmt).to.not.equal(null);
+			expect(lite3.queryType).to.equal('DELETE');
 		})
 	});
 
@@ -52,16 +62,18 @@ describe('lite3-tests', function () {
 				.table('people')
 				.update('name=?, age=?')
 				.where('id=?')
-				.values(['Nina', 27, 4]);
+				.values(['Nina', 27, 4], true)
+				.then(changes => {
 
-			// Select * people and check where id=4 if update was successful.
-			lite3
-				.table('people')
-				.selectAll()
-				.then(peps => {
-					expect(peps[3].name).to.equal('Nina');
-					expect(peps[3].age).to.equal(27);
-				});
+					// Select * people and check where id=4 if update was successful.
+					lite3
+						.table('people')
+						.selectAll()
+						.then(peps => {
+							expect(peps[3].name).to.equal('Nina');
+							expect(peps[3].age).to.equal(27);
+						});
+				})
 		})
 	});
 
@@ -75,10 +87,36 @@ describe('lite3-tests', function () {
 				.insert('?,?,?')
 				.values([null, 'Nina', 27], true)
 				.then(changes => {
-					expect(changes.stmt.changes).to.equal(1);
+
+					lite3
+						.table('people')
+						.selectAll()
+						.then(rows => {
+							let newRow = rows[rows.length - 1];
+							expect(newRow.name).to.equal('Nina');
+							expect(newRow.age).to.equal(27);
+						})
 				})
 		})
-	})
+	});
 
+	describe('lite3.table().del().values()', function () {
+		it('should delete a row from the table', function () {
+			let length = null;
+
+			lite3
+				.table('people')
+				.selectAll()
+				.then(rows => length = rows.length);
+
+			if(length !== null) {
+				lite3
+					.table('people')
+					.del()
+					.values(length -1, true)
+					.then(newRow => expect(newRow.length).to.equal(length -1))
+			}
+		})
+	})
 });
 

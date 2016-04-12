@@ -34,7 +34,7 @@ class lite3 {
 	}
 
 	/**
-	 * Prepares update statement with query to run with lite3.values() while setting lite3.queryStmt and lite3.queryType properties
+	 *  Prepares UPDATE statement to run with lite3.values()
 	 * @param {string} query - Sets lite3.stmt with UPDATE query syntax.
 	 * @returns {lite3} - Class with lite3.stmt property set.
 	 */
@@ -46,6 +46,7 @@ class lite3 {
 	}
 
 	/**
+	 *  Prepares INSERT statement to run with lite3.values()
 	 * @param {string} query - Question marks equal to the amount of values inserting
 	 * @returns {lite3} - Class with lite3.stmt, lite3.queryStmt, lite3.queryType property set
 	 */
@@ -58,15 +59,30 @@ class lite3 {
 	}
 
 	/**
+	 *  Prepares DELETE statement to run with lite3.values()
+	 * @returns {lite3}
+	 */
+	del() {
+		this.stmt = this.db.prepare(`DELETE FROM ${this.tableName} WHERE id=?`);
+		this.queryType = 'DELETE';
+		return this;
+	}
+
+	/**
 	 * Reassigns lite3.stmt with the new clause to perform query.
-	 * @param {string} cl - Clause to perform query.
+	 * @param {string} clause - Clause to perform query.
 	 * @returns {lite3} - Class to perform query.
 	 */
-	clause(cl) {
+	clause(clause) {
 		switch (this.queryType !== null) {
 
 			case this.queryType == 'UPDATE':
-				this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET ${this.queryStmt} ${cl}`);
+				this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET ${this.queryStmt} WHERE ${clause}`);
+				break;
+
+			case this.queryType == 'DELETE':
+				this.stmt = this.db.prepare(`DELETE FROM ${this.tableName} WHERE ${clause}`);
+				break;
 		}
 		return this;
 	}
@@ -77,12 +93,7 @@ class lite3 {
 	 * @returns {lite3} - Class to perform query.
 	 */
 	where(clause) {
-		switch (this.queryType !== null) {
-
-			case this.queryType == 'UPDATE':
-				this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET ${this.queryStmt} WHERE ${clause}`);
-		}
-		return this;
+		return this.clause(clause);
 	}
 
 	/**
