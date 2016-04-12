@@ -45,6 +45,7 @@ describe('lite3-tests', function () {
 		})
 	});
 
+	// lite3.table().del()
 	describe('lite3.table().del()', function () {
 		it('should set lite3.stmt and lite3.queryType', function () {
 			lite3.table('people').del();
@@ -100,21 +101,24 @@ describe('lite3-tests', function () {
 		})
 	});
 
+	// lite3.table().del().values()
 	describe('lite3.table().del().values()', function () {
 		it('should delete a row from the table', function () {
-			let length = null;
 
+			// Check length of total rows before deleting
+			let length = null;
 			lite3
 				.table('people')
 				.selectAll()
 				.then(rows => length = rows.length);
 
-			if(length !== null) {
+			// If length is set, delete the last row and check length
+			if (length !== null) {
 				lite3
 					.table('people')
 					.del()
-					.values(length -1, true)
-					.then(newRow => expect(newRow.length).to.equal(length -1))
+					.values(length - 1, true)
+					.then(newRow => expect(newRow.length).to.equal(length - 1))
 			}
 		})
 	})
