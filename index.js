@@ -134,7 +134,23 @@ class lite3 {
 	}
 
 	/**
-	 * Returns a promise of all of the info on the lite.tableName
+	 * Find a speicifc row in lite3.tableName with constraint
+	 * @param {string} clause - constraint on which row to find
+	 */
+	selectWhere(clause) {
+		return new Promise((resolve, reject) => {
+			this.db.get(`SELECT * FROM ${this.tableName} WHERE ${clause}`, (err, row) => {
+				if(err) {
+					reject(Error(`Unable to find row in the ${this.tableName} table WHERE ${clause}`));
+					return;
+				}
+				resolve(row);
+			})
+		})
+	}
+
+	/**
+	 * Returns a promise of schema on lite.tableName if lite.tableName == * return lite3.allTables()
 	 */
 	schema() {
 		if (this.tableName !== '*') {
@@ -151,7 +167,7 @@ class lite3 {
 	}
 
 	/**
-	 * Returns a promise of all the tables in the DB
+	 * Returns a promise of all table names in the DB
 	 */
 	allTables() {
 		return new Promise((resolve, reject) => {
