@@ -39,7 +39,7 @@ class lite3 {
 	 * @returns {lite3} - Class with lite3.stmt property set.
 	 */
 	update(query) {
-		this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET (${query})`);
+		this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET ${query} WHERE id=?`);
 		this.queryStmt = query;
 		this.queryType = 'UPDATE';
 		return this;
