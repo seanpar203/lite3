@@ -54,7 +54,7 @@ describe('lite3-tests', function () {
 		})
 	});
 
-	// lite3.table().update().values()
+	// lite3.table().update().where().values()
 	describe('lite3.table().insert().values()', function () {
 		it('should update values in DB to a new value', function () {
 
