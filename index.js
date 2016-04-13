@@ -77,7 +77,7 @@ class lite3 {
 		switch (this.queryType !== null) {
 
 			case this.queryType == 'UPDATE':
-				this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET ${this.queryStmt} WHERE ${clause}`);
+				this.stmt = this.db.prepare(`UPDATE ${this.tableName} SET (${this.queryStmt}) WHERE ${clause}`);
 				break;
 
 			case this.queryType == 'DELETE':
