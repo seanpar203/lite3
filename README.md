@@ -4,7 +4,7 @@ SQLite3 sugar built ontop of [node-sqlite3](https://github.com/mapbox/node-sqlit
 
 ## Supported platforms
 
-The `sqlite3` which `lite3` is built on works with Node.js v0.10.x, v0.12.x, v4.x, and v5.x.
+The `sqlite3` module which `lite3` is built on works with Node.js v0.10.x, v0.12.x, v4.x, and v5.x.
 
 Binaries for most Node versions and platforms are provided by default via [node-pre-gyp](https://github.com/mapbox/node-pre-gyp).
 
