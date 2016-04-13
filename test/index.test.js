@@ -118,8 +118,62 @@ describe('lite3-tests', function () {
 					.table('people')
 					.del()
 					.values(length - 1, true)
-					.then(newRow => expect(newRow.length).to.equal(length - 1))
+					.then(newRows => expect(newRows.length).to.equal(length - 1))
 			}
+		})
+	});
+
+
+	// lite3.table().schema()
+	describe('lite3.tabl().schema()', function () {
+		it('should show all table column data types', function () {
+			lite3
+				.table('people')
+				.schema()
+				.then(schema => {
+
+					// Fist Column on people table
+					expect(schema[0].type).to.equal('INTEGER');
+					expect(schema[0].name).to.equal('id');
+
+					// Second Column on people table
+					expect(schema[1].type).to.equal('varchar(255)');
+					expect(schema[1].name).to.equal('name');
+
+					// Third Column on people table
+					expect(schema[2].type).to.equal('INTEGER');
+					expect(schema[2].name).to.equal('age');
+
+					// Total columns on people table
+					expect(schema.length).to.equal(3);
+				})
+		})
+	});
+
+	// lite3.table(*).schema()
+	describe('lite3.table(*).schema()', function () {
+		it('should return name of all tables', function () {
+
+			lite3
+				.table('*')
+				.schema()
+				.then(schema => {
+					expect(schema.length).to.equal(1);
+					expect(schema[0].name).to.equal('people');
+				})
+		})
+	});
+
+	// lite3.allTables()
+	describe('lite3.allTables()', function () {
+		it('should return name of all tables', function () {
+
+			lite3
+				.allTables()
+				.then(names => {
+					expect(names.length).to.equal(1);
+					expect(names[0].name).to.equal('people');
+				})
 		})
 	})
 });

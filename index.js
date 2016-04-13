@@ -136,15 +136,18 @@ class lite3 {
 	/**
 	 * Returns a promise of all of the info on the lite.tableName
 	 */
-	tableInfo() {
-		return new Promise((resolve, reject) => {
-			this.db.all(`PRAGMA TABLE_INFO(${this.tableName})`, (err, res) => {
-				if (err) {
-					reject(err)
-				}
-				resolve(res);
-			})
-		})
+	schema() {
+		if (this.tableName !== '*') {
+			return new Promise((resolve, reject) => {
+				this.db.all(`PRAGMA TABLE_INFO(${this.tableName})`, (err, res) => {
+					if (err) {
+						reject(err)
+					}
+					resolve(res);
+				})
+			});
+		}
+		return this.allTables();
 	}
 
 	/**
