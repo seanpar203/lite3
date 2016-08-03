@@ -17,10 +17,10 @@ class lite3 {
 	 */
 	constructor(file) {
 		this.db = new sqlite3.cached.Database(file);
-		this.tableName = null;
-		this.stmt = null;
-		this.queryStmt = null;
 		this.queryType = null;
+		this.tableName = null;
+		this.queryStmt = null;
+		this.stmt = null;
 	}
 
 	/**
