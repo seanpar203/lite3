@@ -11,8 +11,8 @@ Binaries for most Node versions and platforms are provided by default via [node-
 
 ## Purpose
 I created this library to simplify querying, updating, inserting a SQLite3 database.
-
 Example of updating a row:
+
 ``` js
 lite3
   .table('users')
@@ -26,62 +26,54 @@ You can use [`npm`](https://www.npmjs.com/) to download and install:
 
 * The latest `lite3` package: `npm install lite3`
 
-# Usage
-Check the [`Api`](#api)section to see more examples and uses. 
-``` js
-const lite = require('lite3');
-const lite3 = new lite('database.db')
+# Non Trivial Usage.
+Check the [`Api`](#api)section to understand more. 
 
-lite3
-  .table('work_history')
-  .selectAll()
-  .then(rows => console.log(rows))
-  .catch(err => console.log(err));
-```
-
-# Api
-
-### new lite3(file)
-Creates a new `Class` with the passed in file as a the name of the SQLite3 database that you want to connect.
-* `{string}` `file` - filename of the database you want to make SQL operations on.
-
-EX: 
-
-``` js
-const lite = require('lite3');
-const lite3 = new lite('DBname.db');
-```
-
-
-### lite3.table(tbl)
-Sets the lite3.tableName property and returns the class to perform chainable SQL queries on the specified table.
+### Creating Instance
 * `{string}` `tbl` - Name of the table desired to perform SQL queries.
-
 EX: 
-
 ``` js 
-
-lite3
-  .table('blog_post')
-
+lite3.table('blog_post')
 ```
 
-Once the table is set, you can perform multiple queries on the table. To perform queries on another table you must specifiy the table by running lite.table(tbl) again to set a new table to perform queries.
-
-Example of running two seperate queries on the same table `blog_post`: 
-
+### Querying Database Table.
 ```js
-
 lite3
   .table('blog_post')
   .selectAll()
   .then(rows => console.log(rows))
   .catch(err => console.log(err));
-  
+```
+
+### Update Row
+```js
 lite3
+  .table('blog_post')
   .update('date=?, title=?')
   .where('id=?')
   .values(['04-12-2016',' Awesome New Tittle', 1], true)
   .then(changes =>  console.log(changes))
   .catch(err => console.log(err));
+```
+
+
+### Create New Row
+```js
+			lite3
+				.table('people')
+				.insert('?,?,?')
+				.values([null, 'Nina', 27])
+```
+
+
+# Api
+
+### lite3(file)
+``` js
+/**
+* Create DB Connection with SQLite3 File
+* @param {string} file - Name of SQLite3 file to connect
+*/
+const lite = require('lite3');
+const lite3 = new lite('DBname.db');
 ```
