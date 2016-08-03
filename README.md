@@ -58,11 +58,12 @@ lite3
 
 
 ### Create New Row
+
 ```js
 lite3
-	.table('people')
-	.insert('?,?,?')
-	.values([null, 'Nina', 27])
+  .table('people')
+  .insert('?,?,?')
+  .values([null, 'Nina', 27])
 ```
 
 
