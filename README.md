@@ -9,13 +9,11 @@ The `sqlite3` module which `lite3` is built on works with Node.js v0.10.x, v0.12
 Binaries for most Node versions and platforms are provided by default via [node-pre-gyp](https://github.com/mapbox/node-pre-gyp).
 
 
-## Purpose
-I created this library to simplify querying, updating, inserting a SQLite3 database.
-Example of updating a row:
-
+## Why use Lite3
+Simplified Inserts, Updates & Deletes with a chained approach that increases readability & productivity. 
 ``` js
 lite3
-  .table('users')
+  .table('people')
   .update('name=?, age=?')
   .where('id=1')
   .values('Sean', '24')
@@ -66,6 +64,30 @@ lite3
   .values([null, 'Nina', 27])
 ```
 
+### Create Multiple Instances
+```js
+// Import
+const lite3 = require('lite3');
+
+// variable resembles table name for improved readability & purpose.
+const people = new lite3('DBname.db').table('people');
+const blog_post = new lite3('DBname.db').table('blog_post');
+
+people
+	.insert('?,?,?')
+	.values([null, 'Sean', 25])
+
+// DB Schema: people (id INTEGER PRIMARY KEY ASC , name varchar(255), age INTEGER);
+// INSERT INTO people VALUES(id=null, name='Sean', age=25)
+
+
+blog_post
+	.insert('?,?,?')
+	.values([null, 'Random Post Title', 'Random Post Body'])
+	
+// DB Schema: blog_post (id INTEGER PRIMARY KEY ASC , title varchar(255), body BLOB);
+// INSERT INTO blog_post VALUES(id=null, title='Random Post Title', body='Random Post Body') 
+```
 
 # API
 If you need a deeper understanding [Node-SQLite3] API Docs (https://github.com/mapbox/node-sqlite3/wiki/API) provides all the internal workings which this library is built on.
