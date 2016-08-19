@@ -27,13 +27,6 @@ You can use [`npm`](https://www.npmjs.com/) to download and install:
 # Non Trivial Usage.
 Check the [`Api`](#api)section to understand more. 
 
-### Creating Instance
-* `{string}` `tbl` - Name of the table desired to perform SQL queries.
-EX: 
-``` js 
-lite3.table('blog_post')
-```
-
 ### Querying Database Table.
 ```js
 lite3
@@ -54,9 +47,7 @@ lite3
   .catch(err => console.log(err));
 ```
 
-
 ### Create New Row
-
 ```js
 lite3
   .table('people')
