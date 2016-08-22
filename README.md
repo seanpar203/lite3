@@ -115,7 +115,7 @@ const lite3 = new lite('DBname.db');
  lite3
  .table('people')
  .update('name=?, age=?')
- .values(['Sean', 25]
+ .values(['Sean', 25])
 ```
 
 
