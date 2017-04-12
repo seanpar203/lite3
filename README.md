@@ -55,14 +55,17 @@ lite3
   .values([null, 'Nina', 27])
 ```
 
-### Create Multiple Instances
+### Assign Table To Variables.
 ```js
 // Import
 const lite3 = require('lite3');
 
-// variable resembles table name for improved readability & purpose.
-const people = new lite3('DBname.db').table('people');
-const blog_post = new lite3('DBname.db').table('blog_post');
+// Create instance.
+const lite3 = new lite3('DBname.db');
+
+// Assign specific tables to constants.
+const people = lite3.table('people');
+const blog_post = lite3.table('blog_post');
 
 people
 	.insert('?,?,?')
